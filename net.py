@@ -20,5 +20,24 @@ def import_data():
                 points.append([point.latitude, point.longitude])
     return points
 
+def fake_wind_data(points):
+    # oscillate 5 degrees every 10 mins
+    # 10 mins = 600 points
+    counter = 1
+    alternator = 1
+    wind_dir = 255
+    wind_estimates = []
+    for point in points:
+        if counter == 600:
+            counter = 1
+            shift = 5 * alternator
+            wind_dir += shift
+            alternator *= -1
+        wind_estimates.append(wind_dir)
+        counter += 1
+    return wind_estimates
+        
 
-print(import_data())
+points = import_data()
+wind_estimates = fake_wind_data(points)
+print(wind_estimates)
