@@ -95,9 +95,9 @@ def train():
     net = Net()
     net = net.float()
     learning_rate = 0.001
-    n_iters = 100
+    epochs = 5
     optimizer = optim.SGD(net.parameters(), lr=0.01)
-    for epoch in range(n_iters):
+    for epoch in range(epochs):
         for i, data in enumerate(dataloader):
             sample, wind_estimate = data
             sample = sample.float()
@@ -107,11 +107,10 @@ def train():
             prediction = net(sample)
             # loss
             l = F.nll_loss(prediction, wind_estimate)
-            if i % 100 == 0:
-                print(f"Loss = {l}")
             # gradients, backward pass
             l.backward()
             # update weights
             optimizer.step()
+        print(l)
 
 train()
